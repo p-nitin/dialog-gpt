@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <!-- App css -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+    <link href="css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/app.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+
+    <style type="text/css">       
+        .chat-spinner {
+            margin: 2px auto 0;
+            width: 70px;
+            text-align: center;
+            }
+
+            .chat-spinner > div {
+            width: 10px;
+            height: 10px;
+            background-color: #0e9bd3;
+
+            border-radius: 100%;
+            display: inline-block;
+            -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+            animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+            }
+
+            .chat-spinner .bounce1 {
+            -webkit-animation-delay: -0.32s;
+            animation-delay: -0.32s;
+            }
+
+            .chat-spinner .bounce2 {
+            -webkit-animation-delay: -0.16s;
+            animation-delay: -0.16s;
+            }
+
+            @-webkit-keyframes sk-bouncedelay {
+            0%, 80%, 100% { -webkit-transform: scale(0) }
+            40% { -webkit-transform: scale(1.0) }
+            }
+
+            @keyframes sk-bouncedelay {
+            0%, 80%, 100% { 
+                -webkit-transform: scale(0);
+                transform: scale(0);
+            } 40% { 
+                -webkit-transform: scale(1.0);
+                transform: scale(1.0);
+            }
+        }  
+
+        :root {
+            --scroll-bar-color: #c2b5b5af; /* Set your desired color for the scrollbar thumb */
+            --scroll-bar-bg-color: #f0f0f0; /* Set your desired color for the scrollbar track */
+        }
+
+        .chat-body {
+        height: 230px;
+        display: flex;
+        overflow-y: auto;
+        margin: 0px;
+        padding: 0 0 0 0;
+        scrollbar-width: thin;
+        scrollbar-color: var(--scroll-bar-color) var(--scroll-bar-bg-color);
+        }
+
+        /* Works on Chrome, Edge, and Safari */
+        .chat-body::-webkit-scrollbar {
+        width: 8px;
+        }
+
+        .chat-body::-webkit-scrollbar-track {
+        background: var(--scroll-bar-bg-color);
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+        background-color: var(--scroll-bar-color);
+        border-radius: 20px;
+        }
+
+
+        .conversation-list{
+            padding:0 0 0 0 !important;
+        }
+
+        .card-body{
+            padding:1 1 1 1 !important;
+        }
+
+        .close-button {
+            margin-left: auto;
+        }
+        .bot-icon {
+            display: none;
+        }
+
+        .bot-icon img {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+    <body>
+        <div class="bot-icon"  id="botIcon">
+            <img src="images/users/user-5.png" class="rounded-circle" height="36" alt="Brandon Smith" id="bot-avatar-min">
+        </div>  
+        <div class="chat-container">
+
+            <div class="card">
+                <div class="card-body py-2 border-bottom border-light" id="bot-header">
+                    <div class="media py-1">
+                        <img src="images/users/user-5.png" class="mr-2 rounded-circle" height="36" alt="Brandon Smith" id="bot-avatar">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-0 font-15">
+                                <span id="bot-name">ChattyMind</span>
+                            </h5>
+                            <p class="mt-1 mb-0 text-muted font-12">
+                                <small class="mdi mdi-circle text-success"></small> Online
+                            </p>    
+                        </div>
+                        <div class="close-button">
+                            <button class="btn btn-link btn-close" id="btnClose">
+                                <i class="mdi mdi-window-close"></i>
+                            </button>
+                        </div>                      
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col chat-body" id="chatContainer">                                                        
+                            <ul class="conversation-list" data-simplebar style="max-height: 460px">
+                            
+                                <li class="clearfix">
+                                    <div class="chat-avatar">
+                                        <img src="images/users/user-5.png" class="rounded" alt="ChattyMind" id="bot-init-image" />
+                                        <!-- <i>10:00</i> -->
+                                    </div>
+                                    <div class="conversation-text">
+                                        <div class="ctext-wrap">
+                                            <i>ChattyMind</i>
+                                            <p id="botinitmessage">
+                                                Hello! I am a ChatGPT based chat bot out to answer your questions.
+                                                Choose the options below or type a message.
+                                            </p>
+                                            <p>
+                                                <button id="btnPrompt1" type="button" class="btn btn-outline-primary btn-rounded waves-effect waves-light" data-prompt="Tell me about the white house">About White House</button>
+                                                <button id="btnPrompt2" type="button" class="btn btn-outline-success btn-rounded waves-effect waves-light mt-1" data-prompt="Tell me about Mount Rushmore and provide a quick 1 day itinerary of nearby attractions">About Mount Rushmore</button>
+                                                <button id="btnPrompt3" type="button" class="btn btn-outline-warning btn-rounded waves-effect waves-light mt-1" data-prompt="Tell me about Yellowstone national park and what do do there">Yellowstone National Park</button>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                </li>
+
+                                <!-- <li class="clearfix odd">
+                                    <div class="chat-avatar">
+                                        <img src="images/users/user-1.jpg" class="rounded" alt="James Z" />
+                                        <i> 10:01 </i>
+                                    </div>                                    
+                                    <div class="conversation-text">
+                                        <div class="ctext-wrap">
+                                            <i>You</i>
+                                            <p>
+                                                Hi, How are you? What about our next meeting?
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="clearfix">
+                                    <div class="chat-avatar">
+                                        <img src="images/users/user-5.png" class="rounded" alt="ChattyMind" />
+                                        <i>10:04</i>
+                                    </div>
+                                    <div class="conversation-text">
+                                        <div class="ctext-wrap">
+                                            <i>ChattyMind</i>
+                                            <p>
+                                                Does 4:00 PM work for you?
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                </li> -->
+
+                            </ul>
+                        </div>
+                    </div>                    
+                    <!-- end row -->
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="mt-2 bg-light p-3 rounded">
+                                <form class="needs-validation" novalidate="" name="chat-form"
+                                    id="chat-form">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control border-0" placeholder="Enter your text" required="" id="chat-message">
+                                                <div class="invalid-feedback">
+                                                    Please enter your messsage
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <button type="submit" class="btn btn-success chat-send btn-block"><i class='fe-send'></i></button>
+                                                </div>
+                                              </div>
+                                        </div>  <!-- end col -->
+                                    </div> <!-- end row-->
+                                </form>
+                            </div> 
+                        </div> <!-- end col-->
+                    </div>
+                </div> <!-- end card-body -->
+            </div>
+        </div>       
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="widget.js?v=1.4"></script>
+                
+    </body>
+</html>
